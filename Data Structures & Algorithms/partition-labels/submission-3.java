@@ -1,0 +1,38 @@
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+
+        for(char c: s.toCharArray()){
+            hashMap.put(c, hashMap.getOrDefault(c,0)+1);
+        }
+
+        List<Integer> ans = new ArrayList<>();
+//        char[] charArr = ;
+
+        Set<Character> queue = new HashSet<>();
+        int i =0;
+        queue.add(s.charAt(i));
+
+        while (i<s.length()) {
+            int length = 0;
+            queue.add(s.charAt(i));
+
+            while (!queue.isEmpty() && i<s.length()) {
+                queue.add(s.charAt(i));
+                Character peek = s.charAt(i);
+
+                hashMap.put(peek, hashMap.get(peek) - 1);
+
+                if (hashMap.get(peek) == 0) {
+                    hashMap.remove(peek);
+                    queue.remove(peek);
+                }
+                i++;
+                length++;
+            }
+            ans.add(length);            
+        }
+
+        return ans;
+    }
+}
